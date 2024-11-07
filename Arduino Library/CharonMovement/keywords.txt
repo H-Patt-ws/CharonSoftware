@@ -1,0 +1,33 @@
+#######################################
+# Syntax Coloring Map For Test
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+Motion	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+Attach	KEYWORD2
+Forward	KEYWORD2
+Backward	KEYWORD2
+LeftTurn	KEYWORD2
+RightTurn	KEYWORD2
+ForwardLeft	KEYWORD2
+ForwardRight	KEYWORD2
+BackwardLeft	KEYWORD2
+BackwardRight	KEYWORD2
+
+
+#######################################
+# Instances (KEYWORD2)
+#######################################
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
