@@ -1,15 +1,12 @@
 //Code for master module//
 
-#define greenLedPin 8
 #define ForwardPin 7
 #define BackwardPin 4
-#define LeftPin
-#define RightPin
+#define LeftPin 11
+#define RightPin 13
 int dataFromSlave = 0;
 
 void setup() {
-  pinMode(greenLedPin, OUTPUT);
-  digitalWrite(greenLedPin, LOW);
   pinMode(ForwardPin, INPUT);
   pinMode(BackwardPin, INPUT);
   pinMode(LeftPin, INPUT);
@@ -38,11 +35,18 @@ void loop() {
  int LeftValue = digitalRead(LeftPin);
  int RightValue = digitalRead(RightPin);
 
+
  if (ForwardValue == HIGH) {
    Serial.write('1'); 
  }
  else if (BackwardValue == HIGH) {
-   Serial.write('2'); 
+   Serial.write('5'); 
+ }
+ else if (LeftValue == HIGH){
+   Serial.write('7');
+ }
+ else if (RightValue == HIGH){
+   Serial.write('3');
  }
  else {
    Serial.write('0');
