@@ -1,45 +1,16 @@
 //Code for Slave module//
 #include <Servo.h>
+#include <CharonMovement.h>
 Servo RightWheel;
 Servo LeftWheel;
+Motion Move = Motion(RightWheel, LeftWheel);
 
 #define ledPin 8
 #define slaveSwitchPin 7
 int dataFromMaster = 0;
-int Stop = 1500;
-int LeftFullClock = 1395;
-int LeftFullAnti = 1604;
-int RightFullClock = 1375;
-int RightFullAnti = 1618;
-
-void Forward(){
-  RightWheel.writeMicroseconds(RightFullClock);
-  LeftWheel.writeMicroseconds(LeftFullAnti);
-}
-
-void Backward(){
-  RightWheel.writeMicroseconds(RightFullAnti);
-  LeftWheel.writeMicroseconds(LeftFullClock);
-}
-
-void LeftTurn(){
-  RightWheel.writeMicroseconds(RightFullClock);  
-  LeftWheel.writeMicroseconds(LeftFullClock);
-}
-
-void RightTurn(){ 
-  RightWheel.writeMicroseconds(RightFullAnti);
-  LeftWheel.writeMicroseconds(LeftFullAnti);
-}
-
-void Still(){
-  RightWheel.writeMicroseconds(Stop);
-  LeftWheel.writeMicroseconds(Stop);
-}
 
 void setup() {
-  RightWheel.attach(12);
-  LeftWheel.attach(13);
+  Move.Attach(12, 13);
   pinMode(ledPin, OUTPUT);
   digitalWrite(ledPin, LOW);
   pinMode(slaveSwitchPin, INPUT);
@@ -55,15 +26,15 @@ void loop() {
  }
  // Controlling the led
  if (dataFromMaster == '2') {
-  Backward();
+  Move.Backward();
   Serial.println("low ");
  }
  else if (dataFromMaster == '1') {
-  Forward();
+  Move.Forward();
   Serial.println("high ");
  }
  else if (dataFromMaster == '0') {
-  Still();
+  Move.StayStill();
   Serial.println("low ");
  }
  
