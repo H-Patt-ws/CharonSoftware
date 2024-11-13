@@ -18,15 +18,8 @@ void loop() {
  if(Serial.available() > 0){ // Checks whether data is comming from the serial port
    dataFromSlave = Serial.read(); // Reads the data from the serial port and store it in dataFromSlave variable
  }
- // Controlling the GreenLED PIN
- //if (dataFromSlave == '0') {
- // digitalWrite(greenLedPin, LOW); // led ON
- //}
- //else if (dataFromSlave == '1') {
- // digitalWrite(greenLedPin, HIGH); // led OFF
- //}
- 
- // Reading the masterSwitchValue
+
+ // Reading the switch values
  int forwardSwitchValue = digitalRead(forwardSwitchPin);
  int backwardSwitchValue = digitalRead(backwardSwitchPin);
 
@@ -34,7 +27,7 @@ void loop() {
    Serial.write('1'); // Sends '1' to the master to turn on LED
  }
  else if (backwardSwitchValue == HIGH) {
-   Serial.write('2'); // Sends '1' to the master to turn on LED
+   Serial.write('3'); // Sends '1' to the master to turn on LED
  }
  else {
    Serial.write('0');
