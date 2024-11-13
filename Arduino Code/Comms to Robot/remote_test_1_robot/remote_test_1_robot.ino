@@ -21,32 +21,33 @@ void setup() {
 
 void loop() {
  if(Serial.available() > 0){ // Checks whether data is comming from the serial port
+   dataFromMaster = 9;
    dataFromMaster = Serial.read(); // Reads the data from the serial port and store it in dataFromMaster variable
    Serial.println(dataFromMaster);
  }
 
 switch (dataFromMaster){
-  case (0):{
+  case ('0'):{
     Move.StayStill();
     Serial.println("Stop!");
   }
   break;
-  case (1):{
+  case ('1'):{
     Move.Forward();
     Serial.println("Forth!");
   }
   break;
-  case (3):{
+  case ('3'):{
     Move.RightTurn();
     Serial.println("Turn right!");
   }
   break;
-  case (5):{
+  case ('5'):{
     Move.Backward();
     Serial.println("Back!");
   }
   break;
-  case (7):{
+  case ('7'):{
     Move.LeftTurn();
     Serial.println("Turn left!");
   }
@@ -66,5 +67,5 @@ switch (dataFromMaster){
  //  Serial.write('0');
  //}  
 
- delay(1000);
+ delay(10);
 }
