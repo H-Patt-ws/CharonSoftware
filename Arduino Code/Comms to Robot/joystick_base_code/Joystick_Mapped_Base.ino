@@ -103,30 +103,39 @@ void loop() {
   switch(case_number) {
   case 0:
     Serial.println("Stay Still");
+    Serial.write('0');
     break;
   case 1:
     Serial.println("Forward");
+    Serial.write('1');
     break;
   case 2:
     Serial.println("Forward Right");
+    Serial.write('2');
     break;
   case 3:
     Serial.println("Right");
+    Serial.write('3');
     break;
   case 4:
     Serial.println("Backward Right");
+    Serial.write('4');
     break;
   case 5:
     Serial.println("Backward");
+    Serial.write('5');
     break;
   case 6:
     Serial.println("Backward Left");
+    Serial.write('6');
     break;
   case 7:
     Serial.println("Left");
+    Serial.write('7');
     break;
   case 8:
     Serial.println("Forward Left");
+    Serial.write('8');
     break;
   }
 
