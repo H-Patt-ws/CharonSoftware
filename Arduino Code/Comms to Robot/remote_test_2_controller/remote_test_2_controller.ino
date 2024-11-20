@@ -13,12 +13,16 @@ The switch case is at the end of the code!
 
 #define VRX_PIN  A0 // Arduino pin connected to VRX pin
 #define VRY_PIN  A1 // Arduino pin connected to VRY pin
+#include <SoftwareSerial.h>
+
+SoftwareSerial BTSerial(11, 12);
 
 int xValue = 0; // To store value of the X axis
 int yValue = 0; // To store value of the Y axis
 
 void setup() {
   Serial.begin(38400);
+  BTSerial.begin(38400);
 }
 int Position(int coordinate) {
   //two area sizes tested to see the effect on the joystick control.
@@ -72,10 +76,10 @@ void loop() {
   };
   /*
   //Used for testing and retrieving the x,y coordinates
-  Serial.print("x = ");
-  Serial.print(xValue);
-  Serial.print(", y = ");
-  Serial.println(yValue);
+  BTSerial.print("x = ");
+  BTSerial.print(xValue);
+  BTSerial.print(", y = ");
+  BTSerial.println(yValue);
   delay(200);
   */
 
@@ -85,10 +89,10 @@ void loop() {
 
   /*
   //Used for testing and retrieving region map coordinates
-  Serial.print("hz = ");
-  Serial.print(pos_hz);
-  Serial.print(", vt = ");
-  Serial.println(pos_vt);
+  BTSerial.print("hz = ");
+  BTSerial.print(pos_hz);
+  BTSerial.print(", vt = ");
+  BTSerial.println(pos_vt);
   delay(200);
   */
   
@@ -102,40 +106,40 @@ void loop() {
   //Please insert your functions into the cases.
   switch(case_number) {
   case 0:
-    Serial.println("Stay Still");
-    Serial.write('0');
+    BTSerial.println("Stay Still");
+    BTSerial.write('0');
     break;
   case 1:
-    Serial.println("Forward");
-    Serial.write('1');
+    BTSerial.println("Forward");
+    BTSerial.write('1');
     break;
   case 2:
-    Serial.println("Forward Right");
-    Serial.write('2');
+    BTSerial.println("Forward Right");
+    BTSerial.write('2');
     break;
   case 3:
-    Serial.println("Right");
-    Serial.write('3');
+    BTSerial.println("Right");
+    BTSerial.write('3');
     break;
   case 4:
-    Serial.println("Backward Right");
-    Serial.write('4');
+    BTSerial.println("Backward Right");
+    BTSerial.write('4');
     break;
   case 5:
-    Serial.println("Backward");
-    Serial.write('5');
+    BTSerial.println("Backward");
+    BTSerial.write('5');
     break;
   case 6:
-    Serial.println("Backward Left");
-    Serial.write('6');
+    BTSerial.println("Backward Left");
+    BTSerial.write('6');
     break;
   case 7:
-    Serial.println("Left");
-    Serial.write('7');
+    BTSerial.println("Left");
+    BTSerial.write('7');
     break;
   case 8:
-    Serial.println("Forward Left");
-    Serial.write('8');
+    BTSerial.println("Forward Left");
+    BTSerial.write('8');
     break;
   }
 
