@@ -1,6 +1,12 @@
 //Code for Slave module//
+
+
 #include <Servo.h>
 #include <CharonMovement.h>
+#include <SoftwareSerial.h>
+
+//SoftwareSerial mySerial =  SoftwareSerial(11, 12);
+SoftwareSerial BTSerial(11, 12);
 Servo RightWheel;
 Servo LeftWheel;
 Motion Move = Motion(RightWheel, LeftWheel);
@@ -16,45 +22,46 @@ void setup() {
   pinMode(slaveSwitchPin, INPUT);
   digitalWrite(slaveSwitchPin,LOW);
   Serial.begin(38400); // Default baud rate of the Bluetooth module
+  BTSerial.begin(38400);
 }
 
 
 void loop() {
- if(Serial.available() > 0){ // Checks whether data is comming from the serial port
+ if(BTSerial.available() > 0){ // Checks whether data is comming from the serial port
    dataFromMaster = 9;
    dataFromMaster = Serial.read(); // Reads the data from the serial port and store it in dataFromMaster variable
-   Serial.println(dataFromMaster);
+   BTSerial.println(dataFromMaster);
  }
 
 switch (dataFromMaster){
   case ('0'):{
     Move.StayStill();
-    Serial.println("Stop!");
+    BTSerial.println("Stop!");
   }
   break;
   case ('1'):{
     Move.Forward();
-    Serial.println("Forth!");
+    BTSerial.println("Forth!");
   }
   break;
   case ('3'):{
     Move.RightTurn();
-    Serial.println("Turn right!");
+    BTSerial.println("Turn right!");
   }
   break;
   case ('5'):{
     Move.Backward();
-    Serial.println("Back!");
+    BTSerial.println("Back!");
   }
   break;
   case ('7'):{
     Move.LeftTurn();
-    Serial.println("Turn left!");
+    BTSerial.println("Turn left!");
   }
   break;
   default:{
     Move.StayStill();
-    Serial.println("No Signal!");
+    BTSerial.println("No Signal!");
   }
 }
  
