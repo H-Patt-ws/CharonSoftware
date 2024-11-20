@@ -18,7 +18,7 @@ int xValue = 0; // To store value of the X axis
 int yValue = 0; // To store value of the Y axis
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(38400);
 }
 int Position(int coordinate) {
   //two area sizes tested to see the effect on the joystick control.
