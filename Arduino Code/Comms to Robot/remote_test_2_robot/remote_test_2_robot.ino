@@ -44,9 +44,19 @@ switch (dataFromMaster){
     Serial.println("Forth!");
   }
   break;
+  case ('2'):{
+    Move.ForwardRight();
+    Serial.println("Forward, bear right!");
+  }
+  break;
   case ('3'):{
     Move.RightTurn();
     Serial.println("Turn right!");
+  }
+  break;
+  case ('4'):{
+    Move.BackwardRight();
+    Serial.println("Backward, bear right!");
   }
   break;
   case ('5'):{
@@ -54,9 +64,19 @@ switch (dataFromMaster){
     Serial.println("Back!");
   }
   break;
+  case ('6'):{
+    Move.BackwardLeft();
+    Serial.println("Backward, bear left!");
+  }
+  break;
   case ('7'):{
     Move.LeftTurn();
     Serial.println("Turn left!");
+  }
+  break;
+  case ('8'):{
+    Move.ForwardLeft();
+    Serial.println("Forward, bear left!");
   }
   break;
   default:{
@@ -64,15 +84,5 @@ switch (dataFromMaster){
     Serial.println("No Signal!");
   }
 }
- 
- // Reading the slaveSwitchValue
- //int slaveSwitchValue = digitalRead(slaveSwitchPin);
- //if (slaveSwitchValue == HIGH) {
- //  Serial.write('1'); // Sends '1' to the master to turn on BUZZER
- //}
- //else {
- //  Serial.write('0');
- //}  
-
  delay(10);
 }
