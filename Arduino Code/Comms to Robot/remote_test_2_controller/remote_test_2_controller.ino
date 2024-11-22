@@ -21,7 +21,7 @@ int xValue = 0; // To store value of the X axis
 int yValue = 0; // To store value of the Y axis
 
 void setup() {
-  Serial.begin(38400);
+  Serial.begin(9600);
   BTSerial.begin(38400);
 }
 int Position(int coordinate) {
@@ -106,39 +106,39 @@ void loop() {
   //Please insert your functions into the cases.
   switch(case_number) {
   case 0:
-    BTSerial.println("Stay Still");
+    Serial.println("Stay Still");
     BTSerial.write('0');
     break;
   case 1:
-    BTSerial.println("Forward");
+    Serial.println("Forward");
     BTSerial.write('1');
     break;
   case 2:
-    BTSerial.println("Forward Right");
+    Serial.println("Forward Right");
     BTSerial.write('2');
     break;
   case 3:
-    BTSerial.println("Right");
+    Serial.println("Right");
     BTSerial.write('3');
     break;
   case 4:
-    BTSerial.println("Backward Right");
+    Serial.println("Backward Right");
     BTSerial.write('4');
     break;
   case 5:
-    BTSerial.println("Backward");
+    Serial.println("Backward");
     BTSerial.write('5');
     break;
   case 6:
-    BTSerial.println("Backward Left");
+    Serial.println("Backward Left");
     BTSerial.write('6');
     break;
   case 7:
-    BTSerial.println("Left");
+    Serial.println("Left");
     BTSerial.write('7');
     break;
   case 8:
-    BTSerial.println("Forward Left");
+    Serial.println("Forward Left");
     BTSerial.write('8');
     break;
   }

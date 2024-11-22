@@ -21,7 +21,7 @@ void setup() {
   digitalWrite(ledPin, LOW);
   pinMode(slaveSwitchPin, INPUT);
   digitalWrite(slaveSwitchPin,LOW);
-  Serial.begin(38400); // Default baud rate of the Bluetooth module
+  Serial.begin(9600); // Default baud rate of the Bluetooth module
   BTSerial.begin(38400);
 }
 
@@ -29,39 +29,39 @@ void setup() {
 void loop() {
  if(BTSerial.available() > 0){ // Checks whether data is comming from the serial port
    dataFromMaster = 9;
-   dataFromMaster = Serial.read(); // Reads the data from the serial port and store it in dataFromMaster variable
-   BTSerial.println(dataFromMaster);
+   dataFromMaster = BTSerial.read(); // Reads the data from the serial port and store it in dataFromMaster variable
+   Serial.println(dataFromMaster);
  }
 
 switch (dataFromMaster){
   case ('0'):{
     Move.StayStill();
-    BTSerial.println("Stop!");
+    Serial.println("Stop!");
   }
   break;
   case ('1'):{
     Move.Forward();
-    BTSerial.println("Forth!");
+    Serial.println("Forth!");
   }
   break;
   case ('3'):{
     Move.RightTurn();
-    BTSerial.println("Turn right!");
+    Serial.println("Turn right!");
   }
   break;
   case ('5'):{
     Move.Backward();
-    BTSerial.println("Back!");
+    Serial.println("Back!");
   }
   break;
   case ('7'):{
     Move.LeftTurn();
-    BTSerial.println("Turn left!");
+    Serial.println("Turn left!");
   }
   break;
   default:{
     Move.StayStill();
-    BTSerial.println("No Signal!");
+    Serial.println("No Signal!");
   }
 }
  
