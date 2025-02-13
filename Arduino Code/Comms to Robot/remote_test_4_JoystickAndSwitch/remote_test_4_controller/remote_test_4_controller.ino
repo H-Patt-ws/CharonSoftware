@@ -13,6 +13,8 @@ The switch case is at the end of the code!
 
 #define VRX_PIN  A0 // Arduino pin connected to VRX pin
 #define VRY_PIN  A1 // Arduino pin connected to VRY pin
+#define SWITCH_PIN_1  8  // Button pin
+#define SWITCH_PIN_2  9  // Button pin
 #include <SoftwareSerial.h>
 
 SoftwareSerial BTSerial(11, 12);
@@ -20,25 +22,28 @@ SoftwareSerial BTSerial(11, 12);
 int xValue = 0; // To store value of the X axis
 int yValue = 0; // To store value of the Y axis
 
+
 void setup() {
+  pinMode(SWITCH_PIN_1, INPUT);
+  pinMode(SWITCH_PIN_2, INPUT);
   Serial.begin(9600);
   BTSerial.begin(38400);
 }
 int Position(int coordinate) {
   //two area sizes tested to see the effect on the joystick control.
   //smaller border = smaller "stay still" radius for the joystick
-  /*
+  
     int ranges[3][2]= {
     {0,293}, 
     {365,654}, 
     {730,1023}
-  };*/
+  };
   //larger border = larger "stay still" radius for the joystick
-  int ranges[3][2]= {
+  /*int ranges[3][2]= {
     {0,241}, 
     {391,632}, 
     {782,1023}
-  };
+  };*/
 
   //initialising the values that determine if the value falls into a defined region and which region the value falls it into
   int value_set = 0;
@@ -101,47 +106,84 @@ void loop() {
   /*Serial.println(case_number);
   delay(200);
   */
-  int send = 16;
+
+  int message = 0;// to send data to the BT serial 
+
   //Switch case that uses the controller test naming convention to output the respective movement.
   //Please insert your functions into the cases.
+
   switch(case_number) {
   case 0:
     Serial.println("Stay Still");
-    BTSerial.write('0');
+    message = 0;
+    Serial.println(message);
     break;
   case 1:
     Serial.println("Forward");
-    BTSerial.write('1');
+    message = 1;
+    Serial.println(message);
     break;
   case 2:
     Serial.println("Forward Right");
-    BTSerial.write('2');
+    message = 2;
+    Serial.println(message);
     break;
   case 3:
     Serial.println("Right");
-    BTSerial.write('3');
+    message = 3;
+    Serial.println(message);
     break;
   case 4:
     Serial.println("Backward Right");
-    BTSerial.write('4');
+    message = 4;
+    Serial.println(message);
     break;
   case 5:
     Serial.println("Backward");
-    BTSerial.write('5');
+    message = 5;
+    Serial.println(message);
     break;
   case 6:
     Serial.println("Backward Left");
-    BTSerial.write('6');
+    message = 6;
+    Serial.println(message);
     break;
   case 7:
     Serial.println("Left");
-    BTSerial.write('7');
+    message = 7;
+    Serial.println(message);
     break;
   case 8:
     Serial.println("Forward Left");
-    BTSerial.write('8');
+    message = 8;
+    Serial.println(message);
     break;
   }
+  
+  int SwitchValue1 = digitalRead(SWITCH_PIN_1);
+  int SwitchValue2 = digitalRead(SWITCH_PIN_2);
+
+  if ((SwitchValue1 == HIGH) && (SwitchValue2 == LOW)) {
+    message += 32;
+    Serial.println(message);
+    Serial.println("left");
+  }
+  if ((SwitchValue1 == LOW) && (SwitchValue2 == HIGH)) {
+    message += 16;
+    Serial.println(message);
+    Serial.println("right");
+  } 
+  else if ((SwitchValue1 == LOW) && (SwitchValue2 == LOW)){
+    message = message ;
+    Serial.println(message);
+    Serial.println("middle");
+  }
+  else if ((SwitchValue1 == HIGH) && (SwitchValue2 == HIGH)){
+    Serial.println("WRONG");
+  }
+
+  //Serial.println(message);
+  BTSerial.write(message);
 
   //delay gives it a chance to breathe!
   delay(200);
