@@ -16,6 +16,7 @@ Motion Move = Motion(RightWheel, LeftWheel);
 #define slaveSwitchPin 7
 int dataFromMaster = 0;
 int movMode;
+int buzzCheck = 0;
 
 void setup() {
   Move.Attach(12, 13);
@@ -42,17 +43,19 @@ void loop() {
   Serial.println(movMode);
   movement(movMode);
  }
- else if (dataFromMaster>= 16 && dataFromMaster<=24) {
+ else if (dataFromMaster>= 16 && dataFromMaster<=24 && buzzCheck!=1) {
   Serial.println("right toggle");
 
-  tone(buzzer, 262, 500);
+  tone(buzzer, 262, 1000);
+  buzzCheck = 1;
   movMode = dataFromMaster - 16;
   Serial.println(movMode);
   movement(movMode);
  }
- else if (dataFromMaster>= 32 && dataFromMaster<=40){
+ else if (dataFromMaster>= 32 && dataFromMaster<=40 && buzzCheck!=2){
   Serial.println("left toggle");
   tone(buzzer, 392, 1000);
+  buzzCheck = 2;
   movMode = dataFromMaster - 32;
   Serial.println(movMode);
   movement(movMode);
