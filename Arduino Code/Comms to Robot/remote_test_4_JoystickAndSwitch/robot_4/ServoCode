@@ -1,62 +1,140 @@
 #include <Servo.h>
+#include <CharonMovement.h>
+#include <SoftwareSerial.h>
+
+
+//SoftwareSerial mySerial =  SoftwareSerial(11, 12);
+SoftwareSerial BTSerial(11, 12);
+Servo RightWheel;
+Servo LeftWheel;
+Motion Move = Motion(RightWheel, LeftWheel);
 
 #define SERVO_PIN 9
+#define BUTTON_PIN 7
+#define buzzer 8
+#define slaveSwitchPin 7
 
-// Define angles for each step
-#define PICKUP 0    // Angle for picking up the token (clockwise)
-#define CARRY 90    // Neutral angle for carrying the token
-#define DROP 180    // Angle for dropping the token (anticlockwise)
+int dataFromMaster = 0;
+int movMode;
 
-Servo myServo;
+int currentState = 0;
+bool buttonPressed = false;
+
+#define PICKUP_ANGLE 0
+#define CARRY_ANGLE 90
+#define DROP_ANGLE 180
 
 void setup() {
- 
+  Move.Attach(12, 13);
   myServo.attach(SERVO_PIN);
-
-  Serial.begin(9600);
-  Serial.println("Servo Token Pickup Mechanism Initialized!");
-  
-  myServo.write(CARRY);
-
-  delay(1000); 
+  myServo.write(CARRY_ANGLE);
+  pinMode(BUTTON_PIN, INPUT_PULLUP);
+  pinMode(buzzer, OUTPUT);
+  digitalWrite(buzzer, LOW);
+  pinMode(slaveSwitchPin, INPUT);
+  digitalWrite(slaveSwitchPin, LOW);
+  Serial.begin(9600); // Default baud rate of the Bluetooth module
+  BTSerial.begin(38400);
+  Serial.println("System Initialized!");
 }
 
 void loop() {
+  if (BTSerial.available() > 0) { // Checks whether data is coming from the serial port
+    dataFromMaster = BTSerial.read(); // Reads the data from the serial port and store it in dataFromMaster variable
+    Serial.println(dataFromMaster);
 
-  pickupToken();
-  delay(1000); 
+     //Serial.println(dataFromMaster);
+    if (dataFromMaster >= 0 && dataFromMaster <= 8) {
+       //Serial.println("toggle on");
+      movMode = dataFromMaster;
+      movement(movMode);
+    } else if (dataFromMaster >= 16 && dataFromMaster <= 24) {
+      tone(buzzer, 262, 500);
+      movMode = dataFromMaster - 16;
+      movement(movMode);
+    } else if (dataFromMaster >= 32 && dataFromMaster <= 40) {
+      tone(buzzer, 392, 500);
+      movMode = dataFromMaster - 32;
+      movement(movMode);
+    } else if (dataFromMaster == 9) {
+      Serial.println("No signal!");
+    }
+  }
 
-  carryToken();
-  delay(1000); 
+  if (digitalRead(BUTTON_PIN) == LOW) {
+    if (!buttonPressed) {
+      buttonPressed = true;
+      currentState = (currentState + 1) % 3;
+      switch (currentState) {
+        case 0:
+          pickupToken();
+          break;
+        case 1:
+          carryToken();
+          break;
+        case 2:
+          dropToken();
+          break;
+      }
+      Serial.print("Current Servo State: ");
+      Serial.println(currentState);
+    }
+  } else {
+    buttonPressed = false;
+  }
 
-
-  dropToken();
-  delay(1000); 
+  delay(10);
 }
 
-// Function to pick up the token 
+void movement(int movMode) {
+  switch (movMode) {
+    case 0:
+      Move.StayStill();
+      break;
+    case 1:
+      Move.Forward();
+      break;
+    case 2:
+      Move.ForwardRight();
+      break;
+    case 3:
+      Move.RightTurn();
+      break;
+    case 4:
+      Move.BackwardRight();
+      break;
+    case 5:
+      Move.Backward();
+      break;
+    case 6:
+      Move.BackwardLeft();
+      break;
+    case 7:
+      Move.LeftTurn();
+      break;
+    case 8:
+      Move.ForwardLeft();
+      break;
+    default:
+      Move.StayStill();
+      break;
+  }
+}
+
 void pickupToken() {
-
   Serial.println("Picking up token...");
-
-  myServo.write(PICKUP); 
-
-  delay(500); 
+  myServo.write(PICKUP_ANGLE);
+  delay(500);
 }
 
-// Function to carry the token
 void carryToken() {
-  
   Serial.println("Carrying token...");
-
-  myServo.write(CARRY); 
-  
-  delay(500); 
+  myServo.write(CARRY_ANGLE);
+  delay(500);
 }
 
-// Function to drop the token (anticlockwise rotation)
 void dropToken() {
   Serial.println("Dropping token...");
-  myServo.write(DROP); 
-  delay(500); 
+  myServo.write(DROP_ANGLE);
+  delay(500);
 }
