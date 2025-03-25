@@ -7,6 +7,7 @@
 SoftwareSerial BTSerial(11, 12);
 Servo RightWheel;
 Servo LeftWheel;
+Servo myServo
 Motion Move = Motion(RightWheel, LeftWheel);
 
 #define SERVO_PIN 9
@@ -35,7 +36,6 @@ void setup() {
   digitalWrite(slaveSwitchPin, LOW);
   Serial.begin(9600); // Default baud rate of the Bluetooth module
   BTSerial.begin(38400);
-  Serial.println("System Initialized!");
 }
 
 void loop() {
