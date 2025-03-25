@@ -16,6 +16,8 @@ Motion Move = Motion(RightWheel, LeftWheel);
 #define slaveSwitchPin 7
 int dataFromMaster = 0;
 int movMode;
+int orderSwitch = 0; //order from the switch this cycle. "Carry" is denoted as 0, "Pick up" as 1 and "Drop" as 2
+int lastSwitch = 0; //order from the switch last cycle
 
 void setup() {
   Move.Attach(12, 13);
@@ -37,22 +39,27 @@ void loop() {
  //Serial.println(dataFromMaster);
  if (dataFromMaster>=0 && dataFromMaster<=8){
   //Serial.println("toggle on");
-
+  orderSwitch = 0; //"Carry" order
   movMode = dataFromMaster;
   Serial.println(movMode);
   movement(movMode);
  }
  else if (dataFromMaster>= 16 && dataFromMaster<=24) {
   Serial.println("toggle half");
-
-  tone(buzzer, 262, 500);
+  orderSwitch = 2; //"Drop" order
+  if (lastSwitch != orderSwitch){
+    tone(buzzer, 262, 500);
+  }
   movMode = dataFromMaster - 16;
   Serial.println(movMode);
   movement(movMode);
  }
  else if (dataFromMaster>= 32 && dataFromMaster<=40){
   Serial.println("toggle half");
-  tone(buzzer, 392, 500);
+  orderSwitch = 1; //"Pick up" order
+  if (lastSwitch != orderSwitch){
+    tone(buzzer, 392, 500);
+  }
   movMode = dataFromMaster - 32;
   Serial.println(movMode);
   movement(movMode);
@@ -63,7 +70,7 @@ void loop() {
  else {
   //Serial.println("an error has occured");
  }
-
+lastSwitch = orderSwitch;
 }
 
 void movement(int movMode){
