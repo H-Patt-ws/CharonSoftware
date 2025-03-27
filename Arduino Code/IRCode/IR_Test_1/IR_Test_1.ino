@@ -7,12 +7,12 @@ int lastSignal = 0;
 
 void setup()  {
     Serial.begin(9600);
-    pinMode(13,INPUT);
+    pinMode(11,INPUT);
 }
 void loop()  {
     while(1)  {
         delay(500);
-        if(digitalRead(13)==LOW)  {
+        if(digitalRead(11)==LOW)  {
             signal = 1;
         }
         else  {
