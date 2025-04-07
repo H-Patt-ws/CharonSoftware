@@ -186,6 +186,6 @@ void loop() {
   BTSerial.write(message);
 
   //delay gives it a chance to breathe!
-  delay(200);
+  delay(50);
   
 }
