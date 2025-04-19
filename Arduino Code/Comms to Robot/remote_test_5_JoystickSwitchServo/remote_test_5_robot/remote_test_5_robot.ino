@@ -54,7 +54,7 @@ void loop() {
 
  //Serial.println(dataFromMaster);
  if (dataFromMaster>=0 && dataFromMaster<=8){
-  //Serial.println("toggle on");
+  Serial.println("carry");
   orderSwitch = 0; //"Carry" order
   if (lastSwitch != orderSwitch){         //if switch reads a different signal to the last, it runs the token system code
     moveToken(lastSwitch, orderSwitch);
@@ -64,10 +64,10 @@ void loop() {
   movement(movMode);
  }
  else if (dataFromMaster>= 16 && dataFromMaster<=24) {
-  Serial.println("toggle half");
+  Serial.println("drop");
   orderSwitch = -1; //"Drop" order
   if (lastSwitch != orderSwitch){       //if switch reads a different signal to the last, it runs the token system code
-    tone(buzzer, 262, 500);
+    //tone(buzzer, 262, 500);
     moveToken(lastSwitch, orderSwitch);
   }
   movMode = dataFromMaster - 16;
@@ -75,10 +75,10 @@ void loop() {
   movement(movMode);
  }
  else if (dataFromMaster>= 32 && dataFromMaster<=40){
-  Serial.println("toggle half");
+  Serial.println("pick up");
   orderSwitch = 1; //"Pick up" order
   if (lastSwitch != orderSwitch){           //if switch reads a different signal to the last, it runs the token system code
-    tone(buzzer, 392, 500);
+    //tone(buzzer, 392, 500);
     moveToken(lastSwitch, orderSwitch);
   }
   movMode = dataFromMaster - 32;

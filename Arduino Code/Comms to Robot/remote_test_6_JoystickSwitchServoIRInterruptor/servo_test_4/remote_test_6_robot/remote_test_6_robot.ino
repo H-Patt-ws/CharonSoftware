@@ -61,7 +61,7 @@ void loop() {
 
     if (lastSwitch == 1){
       //myServo.detach();
-      IRsense();
+      //IRsense();
       //myServo.attach(SERVO_PIN);
     }
   }
@@ -70,7 +70,7 @@ void loop() {
   movement(movMode);
  }
  else if (dataFromMaster>= 16 && dataFromMaster<=24) {
-  Serial.println("toggle half");
+  Serial.println("drop");
   orderSwitch = -1; //"Drop" order
   if (lastSwitch != orderSwitch){
     tone(buzzer, 262, 500);
@@ -81,7 +81,7 @@ void loop() {
   movement(movMode);
  }
  else if (dataFromMaster>= 32 && dataFromMaster<=40){
-  Serial.println("toggle half");
+  Serial.println("pick up");
   orderSwitch = 1; //"Pick up" order
   if (lastSwitch != orderSwitch){
     tone(buzzer, 392, 500);
