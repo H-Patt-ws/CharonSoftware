@@ -174,12 +174,12 @@ void moveToken(int lastSwitch,int orderSwitch) {
   int diff = orderSwitch - lastSwitch;
   if (diff > 0){
     myServo.write (PICKUP);
-    delay(1000*diff);
+    delay(750*diff);
     myServo.write(90); 
   }
   else{
     myServo.write(DROP); 
-    delay (1000*abs(diff));
+    delay (750*abs(diff));
     myServo.write(90); 
   }
 
