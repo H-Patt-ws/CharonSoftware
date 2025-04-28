@@ -16,14 +16,14 @@ Motion::Motion(Servo rightMotor, Servo leftMotor)
   LeftWheel = leftMotor;
   RightWheel = rightMotor;
   Stop = 1500;
-  LeftFullClock = 1395;
-  LeftFullAnti = 1604;
-  RightFullClock = 1375;
-  RightFullAnti = 1618;
-  LeftHalfClock = 1452.75;
-  LeftHalfAnti = 1541.5;
-  RightHalfClock = 1451.75;
-  RightHalfAnti = 1545;
+  LeftFullClock = 1388;
+  LeftFullAnti = 1600;
+  RightFullClock = 1404;
+  RightFullAnti = 1593.5;
+  LeftHalfClock = 1465;
+  LeftHalfAnti = 1537;
+  RightHalfClock = 1461.5;
+  RightHalfAnti = 1530;
 }
 
 // Public Methods

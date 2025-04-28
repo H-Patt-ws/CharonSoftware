@@ -5,16 +5,16 @@ Servo LeftWheel;
 int Stop = 1500;
 
 // Full Speed Signals
-int LeftFullClock = 1395;
-int LeftFullAnti = 1604;
-int RightFullClock = 1375;
-int RightFullAnti = 1618;
+int LeftFullClock = 1388;
+int LeftFullAnti = 1600;
+int RightFullClock = 1404;
+int RightFullAnti = 1593.5;
 
 //Half Speed Signals
-float LeftHalfClock = 1452.75;
-float LeftHalfAnti = 1541.5;
-float RightHalfClock = 1451.75;
-float RightHalfAnti = 1545;
+float LeftHalfClock = 1465;
+float LeftHalfAnti = 1537;
+float RightHalfClock = 1461.5;
+float RightHalfAnti = 1530;
 
 void LeftTest(int direction){
   delay(3000);  
