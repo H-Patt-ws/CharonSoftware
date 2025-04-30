@@ -29,6 +29,7 @@ int lastSwitch = 0; //order from the switch last cycle
 
 int signal = 0;
 int lastSignal = 0;
+bool Connected = false;
 
 void setup() {
   Move.Attach(12, 13);
@@ -50,6 +51,12 @@ void loop() {
    dataFromMaster = 9;
    dataFromMaster = BTSerial.read(); // Reads the data from the serial port and store it in dataFromMaster variable
    Serial.println(dataFromMaster);
+   if (Connected == false){
+    Connected = true;
+    tone(buzzer, 131, 200);
+    delay(200);
+    tone(buzzer, 196, 250);
+   }
  }
 
  //Serial.println(dataFromMaster);
